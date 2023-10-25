@@ -2,27 +2,23 @@ import {React,useState }from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Signup = (props) => {
-  const host = "http://localhost:8080"
   const [credential, setCredentials] = useState({name:'',email:'', password:'', cpassword:''})
   let navigator = useNavigate();
   const handleSubmit =async(e)=>{
     
     e.preventDefault();
-    const {name, email,password, cpassword} = credential;
-    const response = await fetch(`${host}/api/auth/careateUser`, {
+    const {username, email,password, cpassword} = credential;
+    const response = await fetch(`/auth/signup`, {
         method: "POST", 
         headers: {
           "Content-Type": "application/json",
           },
-        body: JSON.stringify({name,email, password}),
+        body: JSON.stringify({username,email, password}),
       });
       
-      const json = await response.json();
-      console.log(json)
-      if(json.success){
-        //Save the auth token and redirect
-        localStorage.setItem('token',json.authtoken);
-        navigator("/")
+      console.log(response);
+      if(response.ok){
+        navigator("/login")
         props.showAlert("Account created successfullu","sucess")
       }
       else{
@@ -31,8 +27,7 @@ const Signup = (props) => {
 }
 
   const onChange=(e)=>{
-    setCredentials({...credential, [e.target.name]:e.target.value})
-    console.log(credential)
+    setCredentials({...credential, [e.target.name]:e.target.value});
   }
   return (
     <div className='container mt-3'>
@@ -40,7 +35,7 @@ const Signup = (props) => {
     <form onSubmit={handleSubmit}>
     <div className="mb-3">
       <label htmlFor="name" className="form-label">Name</label>
-      <input type="text" className="form-control" name="name" id="name"  onChange={onChange} aria-describedby="emailHelp"/>
+      <input type="text" className="form-control" name="username" id="username"  onChange={onChange} aria-describedby="emailHelp"/>
     </div>
     <div className="mb-3">
       <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
