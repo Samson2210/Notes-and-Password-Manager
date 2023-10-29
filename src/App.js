@@ -7,6 +7,8 @@ import Signup from './components/Signup';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NoteState from './context/notes/NotesState';
 import { useState } from 'react';
+import Notes from './components/Notes';
+import PasswordManager from './context/passwordmanager/passwordmange';
 
 function App() {
 
@@ -32,6 +34,8 @@ function App() {
               <Route exact path="/" element={<Home showAlert={showAlert} />} />
               <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />
               <Route exact path="/login" element={<Login showAlert={showAlert}/>} />
+              <Route exact path="/notes" element={<Notes showAlert={showAlert}/>} />
+              <Route exact path="/passwordmanger" element={<PasswordManager showAlert={showAlert}/>} />
             </Routes>
           </div>
         </BrowserRouter>

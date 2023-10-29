@@ -13,9 +13,9 @@ const Notes = (props) => {
             getNotes();
         }
         else{
-            navigator("/login")
+            navigator("/notes")
         }
-    }, [])
+    }, [getNotes, navigator])
     
     const ref = useRef(null);
     const refClose = useRef(null);
@@ -73,7 +73,7 @@ const Notes = (props) => {
 
             <div className='row my-3'><h1>Your a Note</h1>
             <div className ="container mx-2">
-                {notes.length==0 && 'No notes to display'}
+                {notes.length===0 && 'No notes to display'}
                 </div>
                 {notes.map((note) => {
                     return <NoteItem key={note.id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
