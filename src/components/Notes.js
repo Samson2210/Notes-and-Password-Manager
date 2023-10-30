@@ -13,7 +13,7 @@ const Notes = (props) => {
             getNotes();
         }
         else{
-            navigator("/notes")
+            navigator("/login")
         }
     }, [getNotes, navigator])
     
