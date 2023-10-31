@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './PasswordManager.css';
+import './password.css';
 
 const PasswordManager = () => {
   const [passwords, setPasswords] = useState([]);
@@ -46,6 +46,7 @@ const PasswordManager = () => {
 
   return (
     <div className="password-manager">
+      
       <h2>Password Manager</h2>
       <div className="form-container">
         <input
