@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './password.css';
+import { useNavigate } from 'react-router-dom';
+import PasswordContext from '../../context/passwords/PasswordContext';
 
 const PasswordManager = () => {
-  const [passwords, setPasswords] = useState([]);
+  // const [passwords, setPasswords] = useState([]);
   const [newWebsite, setNewWebsite] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [editIndex, setEditIndex] = useState(-1);
   const [isPasswordVisible, setPasswordVisibility] = useState(false);
 
-  const addPassword = () => {
+  const navigator = useNavigate();
+  const passwordContext = useContext(PasswordContext);
+
+  const {passwords, addPassword, deletePassword, getPasswords , editPassword} = passwordContext;
+
+
+  // Check if the user is not logged in
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      getPasswords();
+    } else {
+      navigator('/login');
+    }
+  }, []);
+
+  const [password, setPassword] = useState({ id: '', website: '', username: '', password: '' })
+
+
+  const addPass = (e) => {
     if (newWebsite.trim() !== '' && newUsername.trim() !== '' && newPassword.trim() !== '') {
       if (editIndex !== -1) {
         const updatedPasswords = [...passwords];
@@ -18,11 +38,13 @@ const PasswordManager = () => {
           username: newUsername,
           password: newPassword,
         };
-        setPasswords(updatedPasswords);
+        setPassword(updatedPasswords);
+        console.log(updatedPasswords);
         setEditIndex(-1);
       } else {
         const newPasswordEntry = { website: newWebsite, username: newUsername, password: newPassword };
-        setPasswords([...passwords, newPasswordEntry]);
+        addPassword(newPasswordEntry);
+        setPassword([...passwords, newPasswordEntry]);
       }
 
       setNewWebsite('');
@@ -31,7 +53,8 @@ const PasswordManager = () => {
     }
   };
 
-  const editPassword = (index) => {
+  const editPass = (index) => {
+    console.log("edit button");
     const passwordToEdit = passwords[index];
     setNewWebsite(passwordToEdit.website);
     setNewUsername(passwordToEdit.username);
@@ -39,9 +62,9 @@ const PasswordManager = () => {
     setEditIndex(index);
   };
 
-  const deletePassword = (index) => {
+  const deletePass = (index) => {
     const updatedPasswords = passwords.filter((_, i) => i !== index);
-    setPasswords(updatedPasswords);
+    setPassword(updatedPasswords);
   };
 
   return (
@@ -78,7 +101,7 @@ const PasswordManager = () => {
             👁️
           </i>
         </div>
-        <button onClick={addPassword} className="action-button">
+        <button onClick={(e)=>addPass(e)} className="action-button">
           {editIndex !== -1 ? 'Update Password' : 'Add Password'}
         </button>
       </div>
@@ -90,10 +113,10 @@ const PasswordManager = () => {
               <span>
                 Website: {entry.website}, Username: {entry.username}, Password: {isPasswordVisible ? entry.password : '••••••••'}
               </span>
-              <button onClick={() => editPassword(index)} className="action-button">
+              <button onClick={() => editPass(index)} className="action-button">
                 Edit
               </button>
-              <button onClick={() => deletePassword(index)} className="action-button">
+              <button onClick={() => deletePass(index)} className="action-button">
                 Delete
               </button>
             </li>

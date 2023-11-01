@@ -8,7 +8,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NoteState from './context/notes/NotesState';
 import { useState } from 'react';
 import Notes from './components/Notes';
-import PasswordManager from "./components/passwordmanager/Passwordmange"
+import PasswordState from './context/passwords/PasswordState';
+import PasswordManager from './components/passwordmanager/Passwordmange';
 function App() {
 
   const [alert, setAlert] = useState(null);
@@ -25,6 +26,7 @@ function App() {
   return (
     <>
       <NoteState>
+      <PasswordState>
         <BrowserRouter>
           <Navbar />
           <Alert alert={alert} />
@@ -38,7 +40,7 @@ function App() {
             </Routes>
           </div>
         </BrowserRouter>
-        
+        </PasswordState>
       </NoteState>
     </>
   );

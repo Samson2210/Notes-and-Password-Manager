@@ -15,7 +15,7 @@ const Notes = (props) => {
         else{
             navigator("/login")
         }
-    }, [getNotes, navigator])
+    }, [])
     
     const ref = useRef(null);
     const refClose = useRef(null);
