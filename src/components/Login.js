@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import { useHistory } from 'react-router-dom';
 const Login = (props) => {
-  const host = 'http://127.0.0.1:8080';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigator = useNavigate();
