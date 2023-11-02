@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import PasswordContext from '../../context/passwords/PasswordContext';
 
 const PasswordManager = () => {
-  // const [passwords, setPasswords] = useState([]);
   const [newWebsite, setNewWebsite] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -14,8 +13,7 @@ const PasswordManager = () => {
   const navigator = useNavigate();
   const passwordContext = useContext(PasswordContext);
 
-  const {passwords, addPassword, deletePassword, getPasswords , editPassword} = passwordContext;
-
+  const { passwords, addPassword, deletePassword, getPasswords, editPassword } = passwordContext;
 
   // Check if the user is not logged in
   useEffect(() => {
@@ -26,9 +24,6 @@ const PasswordManager = () => {
     }
   }, []);
 
-  const [password, setPassword] = useState({ id: '', website: '', username: '', password: '' })
-
-
   const addPass = (e) => {
     if (newWebsite.trim() !== '' && newUsername.trim() !== '' && newPassword.trim() !== '') {
       if (editIndex !== -1) {
@@ -38,13 +33,11 @@ const PasswordManager = () => {
           username: newUsername,
           password: newPassword,
         };
-        setPassword(updatedPasswords);
-        console.log(updatedPasswords);
+        // Update the password in your context here
         setEditIndex(-1);
       } else {
         const newPasswordEntry = { website: newWebsite, username: newUsername, password: newPassword };
         addPassword(newPasswordEntry);
-        setPassword([...passwords, newPasswordEntry]);
       }
 
       setNewWebsite('');
@@ -54,7 +47,6 @@ const PasswordManager = () => {
   };
 
   const editPass = (index) => {
-    console.log("edit button");
     const passwordToEdit = passwords[index];
     setNewWebsite(passwordToEdit.website);
     setNewUsername(passwordToEdit.username);
@@ -64,12 +56,11 @@ const PasswordManager = () => {
 
   const deletePass = (index) => {
     const updatedPasswords = passwords.filter((_, i) => i !== index);
-    setPassword(updatedPasswords);
+    // Delete the password in your context here
   };
 
   return (
     <div className="password-manager">
-      
       <h2>Password Manager</h2>
       <div className="form-container">
         <input
@@ -101,7 +92,7 @@ const PasswordManager = () => {
             👁️
           </i>
         </div>
-        <button onClick={(e)=>addPass(e)} className="action-button">
+        <button onClick={(e) => addPass(e)} className="action-button">
           {editIndex !== -1 ? 'Update Password' : 'Add Password'}
         </button>
       </div>
