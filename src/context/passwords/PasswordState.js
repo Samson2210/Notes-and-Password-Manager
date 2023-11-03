@@ -70,7 +70,6 @@ const PasswordState = (props) => {
     const editPassword = async (id,credential) => {
         const {website, username, password } = credential;
         const encryptedPassword = encryptPass(password);
-        id = "654351b9f480843cdb2155a7"
         console.log(id)
         console.log(credential)
         const response = await fetch(`/api/passwords/update/${id}`, {
@@ -79,7 +78,7 @@ const PasswordState = (props) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem('token')}`,
             },
-            body: JSON.stringify({ website, username, encryptedPassword }), // body data type must match "Content-Type" header
+            body: JSON.stringify({ website, username, encryptedPassword}), // body data type must match "Content-Type" header
         });
         console.log(response);
         getPasswords();
