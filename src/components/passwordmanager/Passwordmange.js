@@ -92,7 +92,7 @@ const PasswordManager = () => {
         />
         <div className="password-input-container">
           <input
-            type="password"
+            type={passwordVisibility ?"text":"password"}
             placeholder="Password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
@@ -111,9 +111,9 @@ const PasswordManager = () => {
       </div>
       <div className="list-container">
         <h2>Password Lists</h2>
-        <ul>
+        <ul className='list-group'>
           {passwords.map((entry, index) => (
-            <li key={index} className="list-item">
+            <li key={index} className="list-group-item">
               <span>
                 Website: {entry.website}, Username: {entry.username}, Password:{' '}
                 {passwordVisibility[entry.id] ? entry.password : '••••••••'}
