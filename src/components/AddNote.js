@@ -26,7 +26,7 @@ const AddNote = (props) => {
                         <input type="text" className="form-control" id="title"  name="title" aria-describedby="emailHelp" value={note.title} onChange={onChange} minLength={5} required/>                 
                         </div>
                     <div className="form-group">
-                        <label htmlFor="desciption">Description</label>
+                        <label htmlFor="desciption">Note</label>
                         <textarea type="text" className="form-control" id="exampleFormControlTextarea1" name="desciption" value={note.desciption} onChange={onChange} minLength={5} required/>
                     </div>
                    

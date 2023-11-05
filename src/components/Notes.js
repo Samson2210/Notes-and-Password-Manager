@@ -63,9 +63,8 @@ const Notes = (props) => {
                                     <input type="text" className="form-control" id="etitle" value={note.etitle} name="etitle" aria-describedby="emailHelp" onChange={onChange} />                    </div>
                                 <div className="form-group">
                                     <label htmlFor="edesciption">Description</label>
-                                    <input type="text" className="form-control" value={note.edesciption} id="edesciption" name="edesciption" onChange={onChange} />
+                                    <textarea type="text" className="form-control" value={note.edesciption} id="edesciption" name="edesciption" onChange={onChange} />
                                 </div>
-                                {/* <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button> */}
                             </form>
                         </div>
                         <div className="modal-footer">
