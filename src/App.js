@@ -10,6 +10,7 @@ import { useState } from 'react';
 import Notes from './components/Notes';
 import PasswordState from './context/passwords/PasswordState';
 import PasswordManager from './components/passwordmanager/Passwordmange';
+import AuthState from './context/auth/AuthContext';
 function App() {
 
   const [alert, setAlert] = useState(null);
@@ -25,23 +26,25 @@ function App() {
   }
   return (
     <>
-      <NoteState>
-      <PasswordState>
-        <BrowserRouter>
-          <Navbar />
-          <Alert alert={alert} />
-          <div className="container">
-            <Routes>
-              <Route exact path="/" element={<Home showAlert={showAlert} />} />
-              <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />
-              <Route exact path="/login" element={<Login showAlert={showAlert}/>} />
-              <Route exact path="/notes" element={<Notes showAlert={showAlert}/>} />
-              <Route exact path="/passwordmanager" element={<PasswordManager showAlert={showAlert}/>} />
-            </Routes>
-          </div>
-        </BrowserRouter>
-        </PasswordState>
-      </NoteState>
+      <AuthState>
+        <NoteState>
+          <PasswordState>
+            <BrowserRouter>
+              <Navbar />
+              <Alert alert={alert} />
+              <div className="container">
+                <Routes>
+                  <Route exact path="/" element={<Home showAlert={showAlert} />} />
+                  <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
+                  <Route exact path="/login" element={<Login showAlert={showAlert} />} />
+                  <Route exact path="/notes" element={<Notes showAlert={showAlert} />} />
+                  <Route exact path="/passwordmanager" element={<PasswordManager showAlert={showAlert} />} />
+                </Routes>
+              </div>
+            </BrowserRouter>
+          </PasswordState>
+        </NoteState>
+      </AuthState>
     </>
   );
 }

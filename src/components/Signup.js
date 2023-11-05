@@ -1,23 +1,15 @@
 import { React, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/auth/AuthContext';
 
 const Signup = (props) => {
+  const {signup } = useAuth();
   const [credential, setCredentials] = useState({ name: '', email: '', password: '', cpassword: '' })
   let navigator = useNavigate();
   const handleSubmit = async (e) => {
-
     e.preventDefault();
-    const { username, email, password, cpassword } = credential;
-    const response = await fetch(`/auth/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
-
-    console.log(response);
-    if (response.ok) {
+    
+    if(signup(credential)){
       navigator("/login")
       props.showAlert("Account created successfullu", "sucess")
     }

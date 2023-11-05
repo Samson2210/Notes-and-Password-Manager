@@ -3,12 +3,17 @@ import noteContext from '../context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/auth/AuthContext';
+
 const Notes = (props) => {
+    const {checkTokenExpiration}  = useAuth();
     const context = useContext(noteContext);
     const { notes, getNotes , editNote} = context;
     const navigator = useNavigate();
 
+    
     useEffect(() => {
+        checkTokenExpiration();
         if(localStorage.getItem('token')){
             getNotes();
         }

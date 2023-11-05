@@ -1,34 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useHistory } from 'react-router-dom';
+import { useAuth } from '../context/auth/AuthContext';
 const Login = (props) => {
+  const {login,checkTokenExpiration}  = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigator = useNavigate();
-  // const history = useHistory(); 
+  const navigator = useNavigate(); 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(`/auth/login`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: username, password: password }),
-    });
-
-    const json = await response.json();
-    console.log(json)
-    if (json) {
-      //Save the auth token and redirect
-      console.log("User authenticated")
-      localStorage.setItem('token', json.jwtToken);
-      navigator("/")
-      props.showAlert("Loged in Successfully", "success")
+    if(await login(username,password)){
+      props.showAlert("Loged in Successfully", "success");
+      navigator("/");
     }
-    else {
-      props.showAlert("Invalid credential", "danger");
+    else{
+        props.showAlert("Invalid credential", "danger");
     }
   }
+
 
 
   return (

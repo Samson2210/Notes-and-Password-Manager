@@ -2,11 +2,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import './password.css';
 import { useNavigate } from 'react-router-dom';
 import PasswordContext from '../../context/passwords/PasswordContext';
+import { useAuth } from '../../context/auth/AuthContext';
 
 const PasswordManager = () => {
-  // const [passwords, setPasswords] = useState([]);
+  const {checkTokenExpiration, isAuthenticated} = useAuth();
   const [newWebsite, setNewWebsite] = useState('');
-  // const [passwordId, setPasswordId] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [editIndex, setEditIndex] = useState(-1);
@@ -20,12 +20,14 @@ const PasswordManager = () => {
 
   // Check if the user is not logged in
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      getPasswords();
-    } else {
-      navigator('/login');
+    checkTokenExpiration();
+    if(localStorage.getItem('token')){
+        getPasswords();
     }
-  }, []);
+    else{
+        navigator("/login")
+    }
+}, [])
 
   const [password, setPassword] = useState({ id: '', website: '', username: '', password: '' })
 
