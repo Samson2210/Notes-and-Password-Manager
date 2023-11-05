@@ -2,51 +2,51 @@ import React, { useState, useContext, useEffect } from 'react';
 import './password.css';
 import { useNavigate } from 'react-router-dom';
 import PasswordContext from '../../context/passwords/PasswordContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 const PasswordManager = () => {
-  // const [passwords, setPasswords] = useState([]);
   const [newWebsite, setNewWebsite] = useState('');
-  // const [passwordId, setPasswordId] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [editIndex, setEditIndex] = useState(-1);
-  const [isPasswordVisible, setPasswordVisibility] = useState(false);
+  const [passwordVisibility, setPasswordVisibility] = useState({});
 
   const navigator = useNavigate();
   const passwordContext = useContext(PasswordContext);
 
-  const {passwords, addPassword, deletePassword, getPasswords , editPassword} = passwordContext;
+  const { passwords, addPassword, deletePassword, getPasswords, editPassword } = passwordContext;
 
-
-  // Check if the user is not logged in
   useEffect(() => {
     if (localStorage.getItem('token')) {
       getPasswords();
     } else {
-      navigator('/login');
+      navigator('/passwordmanager');
     }
   }, []);
 
-  const [password, setPassword] = useState({ id: '', website: '', username: '', password: '' })
-
+  const togglePasswordVisibility = (passwordId) => {
+    setPasswordVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [passwordId]: !prevVisibility[passwordId],
+    }));
+  };
 
   const addPass = () => {
     if (newWebsite.trim() !== '' && newUsername.trim() !== '' && newPassword.trim() !== '') {
       if (editIndex !== -1) {
         const updatedPasswords = [...passwords];
         updatedPasswords[editIndex] = {
+          id: passwords[editIndex].id,
           website: newWebsite,
           username: newUsername,
           password: newPassword,
         };
-        setPassword(updatedPasswords);
-
-        editPassword(passwords[editIndex].id,updatedPasswords[editIndex]);
+        editPassword(passwords[editIndex].id, updatedPasswords[editIndex]);
         setEditIndex(-1);
       } else {
         const newPasswordEntry = { website: newWebsite, username: newUsername, password: newPassword };
         addPassword(newPasswordEntry);
-        setPassword([...passwords, newPasswordEntry]);
       }
 
       setNewWebsite('');
@@ -64,14 +64,11 @@ const PasswordManager = () => {
   };
 
   const deletePass = (index) => {
-    const updatedPasswords = passwords.filter((_, i) => i !== index);
     deletePassword(passwords[index].id);
-    setPassword(updatedPasswords);
   };
 
   return (
     <div className="password-manager">
-      
       <h2>Password Manager</h2>
       <div className="form-container">
         <input
@@ -90,20 +87,20 @@ const PasswordManager = () => {
         />
         <div className="password-input-container">
           <input
-            type={isPasswordVisible ? 'text' : 'password'}
+            type="password"
             placeholder="Password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             className="text-input"
           />
           <i
-            className={`password-visibility-icon ${isPasswordVisible ? 'visible' : 'hidden'}`}
-            onClick={() => setPasswordVisibility(!isPasswordVisible)}
+            className={`password-visibility-icon hidden`}
+            onClick={() => setPasswordVisibility(!passwordVisibility)}
           >
-            👁️
+            {passwordVisibility ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
           </i>
         </div>
-        <button onClick={(e)=>addPass(e)} className="action-button">
+        <button onClick={(e) => addPass(e)} className="action-button">
           {editIndex !== -1 ? 'Update Password' : 'Add Password'}
         </button>
       </div>
@@ -111,10 +108,18 @@ const PasswordManager = () => {
         <h2>Password Lists</h2>
         <ul>
           {passwords.map((entry, index) => (
-            <li id={entry.id} key={index} className="list-item">
+            <li key={index} className="list-item">
               <span>
-                Website: {entry.website}, Username: {entry.username}, Password: {isPasswordVisible ? entry.password : '••••••••'}
+                Website: {entry.website}, Username: {entry.username}, Password:{' '}
+                {passwordVisibility[entry.id] ? entry.password : '••••••••'}
               </span>
+              <i
+                className={`password-visibility-icon ${passwordVisibility[entry.id] ? 'visible' : 'hidden'}`}
+                onClick={() => togglePasswordVisibility(entry.id)}
+              >
+                {passwordVisibility[entry.id] ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
+              </i>
+
               <button onClick={() => editPass(index)} className="action-button">
                 Edit
               </button>
