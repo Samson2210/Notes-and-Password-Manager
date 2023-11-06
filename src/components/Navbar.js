@@ -17,7 +17,11 @@ const Navbar = () => {
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-black">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="#">SecretKeeperX</Link>
+                <Link to="/">
+  <img src="/logo.png" alt="SecretKeeperX Logo" />
+</Link>
+
+
                     <button
                         class="navbar-toggler"
                         type="button"
