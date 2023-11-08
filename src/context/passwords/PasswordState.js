@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PasswordContext from "./PasswordContext";
 import { AES, enc } from 'crypto-js';
+import host from "../../Utility";
 
 const secretKey =process.env.REACT_APP_SECRET_KEY
 const encryptPass = (password) => {
@@ -18,7 +19,7 @@ const PasswordState = (props) => {
 
     //Get all passwords
     const getPasswords = async () => {
-        const response = await fetch('/api/passwords/all', {
+        const response = await fetch(`${host}/api/passwords/all`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +27,6 @@ const PasswordState = (props) => {
             }
         });
         const json = await response.json();
-        console.log(json);
         const decryptedPasswords = json.map((entry) => ({
             ...entry,
             password: decryptPass(entry.encryptedPassword),
@@ -39,7 +39,7 @@ const PasswordState = (props) => {
         console.log(credential);
         const { website, username, password } = credential; 
         const encryptedPassword = encryptPass(password);
-        const response = await fetch('/api/passwords/save', {
+        const response = await fetch(`${host}/api/passwords/save`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const PasswordState = (props) => {
     const deletePassword = async (id) => {
 
         console.log(id);
-        const response = await fetch(`/api/passwords/delete/${id}`, {
+        const response = await fetch(`${host}/api/passwords/delete/${id}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -72,7 +72,7 @@ const PasswordState = (props) => {
         const encryptedPassword = encryptPass(password);
         console.log(id)
         console.log(credential)
-        const response = await fetch(`/api/passwords/update/${id}`, {
+        const response = await fetch(`${host}/api/passwords/update/${id}`, {
             method: "PUT", 
             headers: {
                 "Content-Type": "application/json",

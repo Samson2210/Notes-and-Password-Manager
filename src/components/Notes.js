@@ -29,7 +29,7 @@ const Notes = (props) => {
     const updateNote = (currnote) => {
         console.log(currnote);
         ref.current.click();
-        setNote({id:currnote.id,etitle:currnote.title,edesciption:currnote.description})
+        setNote({id:currnote.stringId,etitle:currnote.title,edesciption:currnote.description})
     }
 
     const handleClick =(e)=>{
@@ -80,7 +80,7 @@ const Notes = (props) => {
                 {notes.length===0 && 'No notes to display'}
                 </div>
                 {notes.map((note) => {
-                    return <NoteItem key={note.id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
+                    return <NoteItem key={note.stringId} updateNote={updateNote} note={note} showAlert={props.showAlert} />
                 })}</div>
 
         </>

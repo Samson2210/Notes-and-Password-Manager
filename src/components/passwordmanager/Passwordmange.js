@@ -47,7 +47,7 @@ const PasswordManager = () => {
           username: newUsername,
           password: newPassword,
         };
-        editPassword(passwords[editIndex].id, updatedPasswords[editIndex]);
+        editPassword(passwords[editIndex].stringId, updatedPasswords[editIndex]);
         setEditIndex(-1);
       } else {
         const newPasswordEntry = { website: newWebsite, username: newUsername, password: newPassword };
@@ -69,7 +69,7 @@ const PasswordManager = () => {
   };
 
   const deletePass = (index) => {
-    deletePassword(passwords[index].id);
+    deletePassword(passwords[index].stringId);
   };
 
   return (

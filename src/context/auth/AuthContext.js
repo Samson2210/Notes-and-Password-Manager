@@ -1,5 +1,5 @@
 import { createContext, useContext, useState,useEffect } from "react";
-
+import host from "../../Utility";
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -10,7 +10,7 @@ const AuthState = (props) => {
     const [user, setUser] = useState(null);
 
     const login = async (username, password) => {
-        const response = await fetch(`/auth/login`, {
+        const response = await fetch(`${host}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -20,7 +20,6 @@ const AuthState = (props) => {
 
         const status = await response.status;
         const json = await response.json();
-        console.log(json)
         if (status==200) {
             setUser(username);
             console.log("User authenticated")
@@ -39,7 +38,7 @@ const AuthState = (props) => {
 
     const signup = async (credential) => {
         const { username, email, password, cpassword } = credential;
-        const response = await fetch(`/auth/signup`, {
+        const response = await fetch(`${host}/auth/signup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

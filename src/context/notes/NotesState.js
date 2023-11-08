@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import NoteContext from "./NoteContext";
+import host from "../../Utility";
 
 const NoteState = (props)=>{
 
@@ -9,7 +10,7 @@ const NoteState = (props)=>{
     //Get all notes
     const getNotes = async()=>{
       //TODO: API Call
-      const response = await fetch(`/api/notes/all`, {
+      const response = await fetch(`${host}/api/notes/all`, {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         headers: {
           "Content-Type": "application/json",
@@ -26,8 +27,7 @@ const NoteState = (props)=>{
       //Add a Note
       const addNote = async(title, description )=>{
         console.log(title,description);
-        //TODO: API Call
-        const response = await fetch(`/api/notes/add`, {
+        const response = await fetch(`${host}/api/notes/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -46,8 +46,8 @@ const NoteState = (props)=>{
       //Delete a Note
       const deleteNote =async (id)=>{
         console.log(id);
-        //TODO: API Call
-        const response = await fetch(`api/notes/delete/${id}`, {
+
+        const response = await fetch(`${host}/api/notes/delete/${id}`, {
           method: "DELETE",
           headers: {
             "Authorization":`Bearer ${localStorage.getItem('token')}`
@@ -56,7 +56,7 @@ const NoteState = (props)=>{
         console.log(response)
 
         console.log("deleting the note with id"+id);
-        const newNote =notes.filter((note)=>{return note.id!==id});
+        const newNote =notes.filter((note)=>{return note.stringId!==id});
         setNotes(newNote)
         
       }
@@ -64,7 +64,7 @@ const NoteState = (props)=>{
       // Edit a Note
       const editNote = async(id, title, description)=>{
         // API CALL 
-        const response = await fetch(`/api/notes/update/${id}`, {
+        const response = await fetch(`${host}/api/notes/update/${id}`, {
           method: "PUT", // *GET, POST, PUT, DELETE, etc.
           headers: {
             "Content-Type": "application/json",
