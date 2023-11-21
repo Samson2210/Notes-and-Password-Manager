@@ -110,7 +110,7 @@ const PasswordManager = () => {
             )}
           </button>
         </div>
-        <button onClick={(e) => addPass(e)} className="action-button">
+        <button onClick={(e) => addPass(e)} className="btn btn-primary">
           {editIndex !== -1 ? 'Update Password' : 'Add Password'}
         </button>
       </div>
@@ -118,7 +118,7 @@ const PasswordManager = () => {
         <h2>Password Lists</h2>
         <ul className="list-group">
           {passwords.map((entry, index) => (
-            <li key={index} className="list-group-item">
+            <li key={index} className="list-group-item d-flex justify-content-between">
               <span>
                 Website: {entry.website}, Username: {entry.username}, Password:{' '}
                 {passwordVisibility[index] ? entry.password : '••••••••'}
