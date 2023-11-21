@@ -27,7 +27,7 @@ const Notes = (props) => {
     const[note, setNote] = useState({id:'',etitle:'',edesciption:''})
 
     const updateNote = (currnote) => {
-        console.log(currnote);
+        // console.log(currnote);
         ref.current.click();
         setNote({id:currnote.stringId,etitle:currnote.title,edesciption:currnote.description})
     }

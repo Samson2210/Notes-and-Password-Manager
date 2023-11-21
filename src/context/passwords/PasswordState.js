@@ -36,7 +36,7 @@ const PasswordState = (props) => {
 
     //Add a password
     const addPassword = async (credential) => {
-        console.log(credential);
+        // console.log(credential);
         const { website, username, password } = credential; 
         const encryptedPassword = encryptPass(password);
         const response = await fetch(`${host}/api/passwords/save`, {
@@ -47,21 +47,21 @@ const PasswordState = (props) => {
             },
             body: JSON.stringify({ website, username, encryptedPassword }), // body data type must match "Content-Type" header
         });
-        console.log(response);
+        // console.log(response);
         getPasswords();
     };
 
     //Delete a password
     const deletePassword = async (id) => {
 
-        console.log(id);
+        // console.log(id);
         const response = await fetch(`${host}/api/passwords/delete/${id}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem('token')}`
             },
         });
-        console.log(response);
+        // console.log(response);
         getPasswords();
     }
 
@@ -70,8 +70,8 @@ const PasswordState = (props) => {
     const editPassword = async (id,credential) => {
         const {website, username, password } = credential;
         const encryptedPassword = encryptPass(password);
-        console.log(id)
-        console.log(credential)
+        // console.log(id)
+        // console.log(credential)
         const response = await fetch(`${host}/api/passwords/update/${id}`, {
             method: "PUT", 
             headers: {
@@ -80,7 +80,7 @@ const PasswordState = (props) => {
             },
             body: JSON.stringify({ website, username, encryptedPassword}), // body data type must match "Content-Type" header
         });
-        console.log(response);
+        // console.log(response);
         getPasswords();
     }
     return (

@@ -17,7 +17,7 @@ const AddNote = (props) => {
         setNote({...note,[e.target.name]:e.target.value});
     }
     return (
-        <div className="container my-3">
+        <div className="shadow p-5 rounded container my-3">
             <div>
                 <h1>Add a Note</h1>
                 <form>

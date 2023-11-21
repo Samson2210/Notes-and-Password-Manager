@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import noteContext from '../context/notes/NoteContext';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const NoteItem = (props) => {
@@ -13,9 +15,11 @@ const NoteItem = (props) => {
           <div className="d-flex justify-content-between">
             <h5 className="card-title">{note.title}</h5>
             <div>
-            <i className="fa-solid fa-trash mx-2" onClick={()=>{deleteNote(note.stringId); props.showAlert("Deleted sucessfully", "success")}}></i>
+            <FontAwesomeIcon
+                icon={faEdit} className="action-icon delete-icon mx-2" onClick={()=>{deleteNote(note.stringId); props.showAlert("Deleted sucessfully", "success")}}/>
             
-            <i className="fa-regular fa-pen-to-square mx-2" onClick={()=>{updateNote(note)}}></i>
+            <FontAwesomeIcon
+                icon={faTrash} className="action-icon edit-icon mx-2" onClick={()=>{updateNote(note)}}/>
             </div>
           </div>
           <p className="card-text">{note.description}</p>

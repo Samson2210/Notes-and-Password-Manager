@@ -9,9 +9,8 @@ const NoteState = (props)=>{
 
     //Get all notes
     const getNotes = async()=>{
-      //TODO: API Call
       const response = await fetch(`${host}/api/notes/all`, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        method: "GET", 
         headers: {
           "Content-Type": "application/json",
           "Authorization":`Bearer ${localStorage.getItem('token')}`,
@@ -33,19 +32,19 @@ const NoteState = (props)=>{
             "Content-Type": "application/json",
             "Authorization":`Bearer ${localStorage.getItem('token')}`,
           },
-          body: JSON.stringify({title,description}), // body data type must match "Content-Type" header
+          body: JSON.stringify({title,description}), 
         });
         // const json = response.json(); // parses JSON response into native JavaScript objects
         // console.log(json);
       
-        console.log(response);
+        // console.log(response);
         getNotes();
 
       }
 
       //Delete a Note
       const deleteNote =async (id)=>{
-        console.log(id);
+        // console.log(id);
 
         const response = await fetch(`${host}/api/notes/delete/${id}`, {
           method: "DELETE",
@@ -53,9 +52,9 @@ const NoteState = (props)=>{
             "Authorization":`Bearer ${localStorage.getItem('token')}`
           },
         });
-        console.log(response)
+        // console.log(response)
 
-        console.log("deleting the note with id"+id);
+        // console.log("deleting the note with id"+id);
         const newNote =notes.filter((note)=>{return note.stringId!==id});
         setNotes(newNote)
         
@@ -73,7 +72,7 @@ const NoteState = (props)=>{
           },
           body: JSON.stringify({title:title,description:description}), // body data type must match "Content-Type" header
         });
-        console.log(response)
+        // console.log(response)
       
         getNotes();
       }

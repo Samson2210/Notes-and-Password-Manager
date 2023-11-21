@@ -119,13 +119,14 @@ const PasswordManager = (props) => {
       </div>
       <div className="list-container">
         <h2>Password Lists</h2>
-        <ul className="list-group">
+        <ul className="list-group n">
           {passwords.map((entry, index) => (
             <li key={index} className="list-group-item d-flex justify-content-between">
               <span>
-                Website: {entry.website}, Username: {entry.username}, Password:{' '}
+               <b> Website: </b>{entry.website}  <b> Username: </b>{entry.username}  <b> Password:</b>{' '}
                 {passwordVisibility[index] ? entry.password : '••••••••'}
               </span>
+              <div>
               <button
                 className="password-visibility-button"
                 onClick={() => togglePasswordEntryVisibility(index)}
@@ -136,7 +137,6 @@ const PasswordManager = (props) => {
                   <FontAwesomeIcon icon={faEyeSlash} />
                 )}
               </button>
-
               <FontAwesomeIcon
                 icon={faEdit}
                 className="action-icon edit-icon"
@@ -147,6 +147,7 @@ const PasswordManager = (props) => {
                 className="action-icon delete-icon"
                 onClick={() => deletePass(index)}
               />
+              </div>
             </li>
           ))}
         </ul>
