@@ -11,6 +11,8 @@ import Notes from './components/Notes';
 import PasswordState from './context/passwords/PasswordState';
 import PasswordManager from './components/passwordmanager/Passwordmange';
 import AuthState from './context/auth/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
 
   const [alert, setAlert] = useState(null);
@@ -20,9 +22,16 @@ function App() {
       msg: message,
       type: type
     })
-    setTimeout(() => {
-      setAlert(null);
-    }, 1500)
+    toast[type](message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
   }
   return (
     <>
@@ -31,8 +40,9 @@ function App() {
           <PasswordState>
             <BrowserRouter>
               <Navbar />
-              <Alert alert={alert} />
-              <div className="container">
+              {/* <Alert alert={alert} /> */}
+              <ToastContainer />
+              <div className="container my-5">
                 <Routes>
                   <Route exact path="/" element={<Home showAlert={showAlert} />} />
                   <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />

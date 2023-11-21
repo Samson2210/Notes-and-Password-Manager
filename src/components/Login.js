@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link,useNavigate} from 'react-router-dom'
 import { useAuth } from '../context/auth/AuthContext';
+
 const Login = (props) => {
   const {login,checkTokenExpiration}  = useAuth();
   const [username, setUsername] = useState('');
@@ -13,14 +14,14 @@ const Login = (props) => {
       navigator("/");
     }
     else{
-        props.showAlert("Invalid credential", "danger");
+        props.showAlert("Invalid credential", "warn");
     }
   }
 
 
 
   return (
-    <div class="row justify-content-center">
+    <div class="row justify-content-center my-5">
       <div class="col-lg-7">
         <div className="card">
           <h2 className='my-3 text-primary text-center'>Login to continue</h2>
@@ -37,6 +38,9 @@ const Login = (props) => {
               <button type="submit" className="btn btn-primary" >Login</button>
             </form>
           </div>
+          <div className="text-center mb-3">
+            <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+            </div>
         </div>
       </div>
     </div>

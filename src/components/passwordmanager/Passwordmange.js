@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { useAuth } from '../../context/auth/AuthContext';
 
-const PasswordManager = () => {
+const PasswordManager = (props) => {
   const {checkTokenExpiration, isAuthenticated} = useAuth();
   const [newWebsite, setNewWebsite] = useState('');
   const [newUsername, setNewUsername] = useState('');
@@ -48,10 +48,12 @@ const PasswordManager = () => {
           password: newPassword,
         };
         editPassword(passwords[editIndex].stringId, updatedPasswords[editIndex]);
+        props.showAlert("Password Updated", "success");
         setEditIndex(-1);
       } else {
         const newPasswordEntry = { website: newWebsite, username: newUsername, password: newPassword };
         addPassword(newPasswordEntry);
+        props.showAlert("New Password Created","success")
       }
 
       setNewWebsite('');
@@ -70,10 +72,11 @@ const PasswordManager = () => {
 
   const deletePass = (index) => {
     deletePassword(passwords[index].stringId);
+    props.showAlert("Password Deleted", "success");
   };
 
   return (
-    <div className="password-manager">
+    <div className="password-manager my-5">
       <h2>Password Manager</h2>
       <div className="form-container">
         <input

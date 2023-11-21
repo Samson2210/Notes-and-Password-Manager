@@ -11,10 +11,10 @@ const Signup = (props) => {
     
     if(signup(credential)){
       navigator("/login")
-      props.showAlert("Account created successfullu", "sucess")
+      props.showAlert("Account created successfully", "success")
     }
     else {
-      props.showAlert("Invalid credential", "danger")
+      props.showAlert("Something went wrong", "error")
     }
   }
 
@@ -22,11 +22,11 @@ const Signup = (props) => {
     setCredentials({ ...credential, [e.target.name]: e.target.value });
   }
   return (
-    <div className='container'>
+    <div className='container my-5'>
       <div className="row justify-content-center">
         <div className="col-lg-7">
-          <div className="card">
-            <h2 className='mt-3 text-success text-center'>Create an account to use the APP</h2>
+          <div className="card shadow">
+            <h2 className='mt-3 text-success text-center'>Signup</h2>
             <form className='card-body p-4' onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>
@@ -47,6 +47,7 @@ const Signup = (props) => {
               </div>
               <button type="submit" className="btn btn-success">Signup</button>
             </form>
+            
           </div>
         </div>
       </div>
