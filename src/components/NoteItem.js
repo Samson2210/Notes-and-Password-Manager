@@ -16,10 +16,10 @@ const NoteItem = (props) => {
             <h5 className="card-title">{note.title}</h5>
             <div>
             <FontAwesomeIcon
-                icon={faEdit} className="action-icon delete-icon mx-2" onClick={()=>{deleteNote(note.stringId); props.showAlert("Deleted sucessfully", "success")}}/>
+                icon={faTrash} className="action-icon delete-icon mx-2" onClick={()=>{deleteNote(note.stringId); props.showAlert("Deleted sucessfully", "success")}}/>
             
             <FontAwesomeIcon
-                icon={faTrash} className="action-icon edit-icon mx-2" onClick={()=>{updateNote(note)}}/>
+                icon={faEdit} className="action-icon trash-icon mx-2" onClick={()=>{updateNote(note)}}/>
             </div>
           </div>
           <p className="card-text">{note.description}</p>

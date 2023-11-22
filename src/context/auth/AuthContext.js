@@ -18,6 +18,7 @@ const AuthState = (props) => {
             body: JSON.stringify({ username: username, password: password }),
         });
 
+        try{
         const status = await response.status;
         const json = await response.json();
         if (status==200) {
@@ -27,6 +28,10 @@ const AuthState = (props) => {
             return true;
         }
         else {
+            return false;
+        }
+        }
+        catch{
             return false;
         }
     };
