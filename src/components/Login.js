@@ -10,7 +10,7 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(await login(username,password)){
-      props.showAlert("Loged in Successfully", "success");
+      props.showAlert("Logged in Successfully", "success");
       navigator("/");
     }
     else{
