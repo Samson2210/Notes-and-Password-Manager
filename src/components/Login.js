@@ -21,11 +21,11 @@ const Login = (props) => {
 
 
   return (
-    <div class="row justify-content-center my-5">
-      <div class="col-lg-7">
+    <div className="row justify-content-center my-5">
+      <div className="col-lg-7">
         <div className="card">
           <h2 className='my-3 text-primary text-center'>Login to continue</h2>
-          <div class="card-body p-4">
+          <div className="card-body p-4">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label"> Username</label>

@@ -23,7 +23,7 @@ const Navbar = () => {
 
 
                     <button
-                        class="navbar-toggler"
+                        className="navbar-toggler"
                         type="button"
                         data-mdb-toggle="collapse"
                         data-mdb-target="#navbarButtonsExample"
@@ -31,15 +31,15 @@ const Navbar = () => {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <i class="fas fa-bars"></i>
+                        <i className="fas fa-bars"></i>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarButtonsExample">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === "/" ? "active" : " "}`} aria-current="page" to="/">Notes</Link>
                             </li>
-                            <li class="nav-item">
-                                <Link class={`nav-link ${location.pathname === "/passwordmanager" ? "active" : " "}`} to="/passwordmanager">Password</Link>
+                            <li className="nav-item">
+                                <Link className={`nav-link ${location.pathname === "/passwordmanager" ? "active" : " "}`} to="/passwordmanager">Password</Link>
                             </li>
                         </ul>
                         {!localStorage.getItem('token') ? <form className="d-flex" role="search">
