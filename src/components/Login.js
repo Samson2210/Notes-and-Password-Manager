@@ -1,21 +1,41 @@
 import React, { useState, useEffect } from 'react'
-import { Link,useNavigate} from 'react-router-dom'
+import { Link,resolvePath,useNavigate} from 'react-router-dom'
 import { useAuth } from '../context/auth/AuthContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = (props) => {
   const {login,checkTokenExpiration}  = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loginBtn, setLoginBtn]  = useState(true);
   const navigator = useNavigate(); 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(await login(username,password)){
-      props.showAlert("Logged in Successfully", "success");
-      navigator("/");
-    }
-    else{
-        props.showAlert("Invalid credential", "warn");
-    }
+
+    const response  =await toast.promise(
+      login(username,password),
+      {
+        pending: {
+          render(){
+            setLoginBtn(false);
+            return "Please wait laoding"
+          },
+          icon: true,
+          position: "top-center",
+          theme: "colored",
+        },
+      }
+    )
+
+    setLoginBtn(true);
+    if(response){
+        props.showAlert("Logged in Successfully", "success");
+        navigator("/");
+      }
+      else{
+          props.showAlert("Invalid credential", "warn");
+      }
   }
 
 
@@ -35,7 +55,7 @@ const Login = (props) => {
                 <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                 <input type="password" name="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)} id="password" />
               </div>
-              <button type="submit" className="btn btn-primary" >Login</button>
+              <button type="submit" disabled={!loginBtn} className="btn btn-primary" >Login</button>
             </form>
           </div>
           <div className="text-center mb-3">
