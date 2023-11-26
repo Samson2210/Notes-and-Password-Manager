@@ -19,7 +19,7 @@ const Login = (props) => {
         pending: {
           render(){
             setLoginBtn(false);
-            return "Please wait laoding"
+            return "Please wait loading"
           },
           icon: true,
           position: "top-center",
