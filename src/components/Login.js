@@ -22,7 +22,7 @@ const Login = (props) => {
             return "Please wait loading"
           },
           icon: true,
-          position: "top-center",
+          position: "bottom-center",
           theme: "colored",
         },
       }
