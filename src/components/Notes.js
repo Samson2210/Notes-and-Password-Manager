@@ -62,8 +62,8 @@ const Notes = (props) => {
                                     <label htmlFor="etitle">Title</label>
                                     <input type="text" className="form-control" id="etitle" value={note.etitle} name="etitle" aria-describedby="emailHelp" onChange={onChange} />                    </div>
                                 <div className="form-group">
-                                    <label htmlFor="edesciption">Description</label>
-                                    <textarea type="text" className="form-control" value={note.edesciption} id="edesciption" name="edesciption" onChange={onChange} />
+                                    <label htmlFor="edesciption">Note</label>
+                                    <textarea type="text" className="form-control" value={note.edesciption} id="edesciption" name="edesciption"  rows="8" onChange={onChange} />
                                 </div>
                             </form>
                         </div>
