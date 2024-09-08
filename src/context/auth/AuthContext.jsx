@@ -1,15 +1,18 @@
-import { createContext, useContext, useState,useEffect } from "react";
+import { createContext, useContext, useState,useCallback } from "react";
 import host from "../../Utility";
 const AuthContext = createContext();
+import CryptoJS from "crypto-js";
 
 export const useAuth = () => {
     return useContext(AuthContext);
 };
 
 const AuthState = (props) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState();
+    const [salt, setSalt] = useState();
+    const [validationToken, setValidationToken] = useState();
 
-    const login = async (username, password) => {
+    const login = useCallback(async(username, password) => {
         const response = await fetch(`${host}/auth/login`, {
             method: "POST",
             headers: {
@@ -23,6 +26,8 @@ const AuthState = (props) => {
         const json = await response.json();
         if (status==200) {
             setUser(username);
+            setSalt(json.salt);
+            setValidationToken(json.validationToken);
             console.log("User authenticated")
             localStorage.setItem('token', json.jwtToken);            
             return true;
@@ -34,21 +39,28 @@ const AuthState = (props) => {
         catch{
             return false;
         }
-    };
+    },[]);
 
     const logout = () => {
         localStorage.removeItem('token');
+        sessionStorage.clear();
         setUser(null);
     };
 
     const signup = async (credential) => {
-        const { username, email, password, cpassword } = credential;
+        const { username, email, password, masterKey } = credential;
+        const salt =  CryptoJS.lib.WordArray.random(128 / 8).toString();  
+        const key = CryptoJS.PBKDF2(masterKey, CryptoJS.enc.Hex.parse(salt), {
+            keySize: 512 / 32
+          });
+        const validationToken  = CryptoJS.SHA256(key).toString();
+        
         const response = await fetch(`${host}/auth/signup`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ username, email, password }),
+            body: JSON.stringify({ username, email, password , salt , validationToken }),
         });
 
         console.log(response);
@@ -73,8 +85,10 @@ const AuthState = (props) => {
         }
     }
 
+
+
     return (
-        <AuthContext.Provider value={{ user, login, logout,signup ,checkTokenExpiration}}>
+        <AuthContext.Provider value={{login, logout,signup ,checkTokenExpiration}}>
             {props.children}
         </AuthContext.Provider>
     );

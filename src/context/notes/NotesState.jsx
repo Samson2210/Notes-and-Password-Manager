@@ -1,9 +1,21 @@
 import React, {useState} from "react";
 import NoteContext from "./NoteContext";
 import host from "../../Utility";
+import { AES,enc } from "crypto-js";
+
+const secretKey = sessionStorage.getItem("key")
+
 
 const NoteState = (props)=>{
+  const encrypt = (password) => {
+    return AES.encrypt(password, secretKey).toString();
+};
 
+
+const decrypt = (encryptedPassword) => {
+    const bytes = AES.decrypt(encryptedPassword, secretKey);
+    return bytes.toString(enc.Utf8);
+};
     const notesInital = []
     const [ notes, setNotes] = useState(notesInital)
 
@@ -18,21 +30,28 @@ const NoteState = (props)=>{
       });
 
       const json = await response.json();
-      
-      setNotes(json);
+      //decrpt notes
+      const descryptedNotes =  json.map(note => ({
+        ...note,
+        title: decrypt(note.title),
+        description: decrypt(note.description),
+    }));
+
+      setNotes(descryptedNotes);
       
     }
 
       //Add a Note
       const addNote = async(title, description )=>{
-        console.log(title,description);
+        const encryptedTitle = encrypt(title);
+        const encryptedDecription = encrypt(description);
         const response = await fetch(`${host}/api/notes/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Authorization":`Bearer ${localStorage.getItem('token')}`,
           },
-          body: JSON.stringify({title,description}), 
+          body: JSON.stringify({title:encryptedTitle,description:encryptedDecription}), 
         });
         // const json = response.json(); // parses JSON response into native JavaScript objects
         // console.log(json);
@@ -62,6 +81,9 @@ const NoteState = (props)=>{
 
       // Edit a Note
       const editNote = async(id, title, description)=>{
+
+        const encryptedTitle = encrypt(title);
+        const encryptedDecription = encrypt(description);
         // API CALL 
         const response = await fetch(`${host}/api/notes/update/${id}`, {
           method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -70,9 +92,8 @@ const NoteState = (props)=>{
             // 'Content-Type': 'application/x-www-form-urlencoded',
             "Authorization":`Bearer ${localStorage.getItem('token')}`,
           },
-          body: JSON.stringify({title:title,description:description}), // body data type must match "Content-Type" header
+          body: JSON.stringify({title:encryptedTitle,description:encryptedDecription}), 
         });
-        // console.log(response)
       
         getNotes();
       }

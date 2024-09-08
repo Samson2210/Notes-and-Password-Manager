@@ -13,10 +13,12 @@ import PasswordManager from './components/passwordmanager/Passwordmange';
 import AuthState from './context/auth/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ValidateState from './context/validation/ValidateContext';
+import Validate from './components/Validate'
 function App() {
 
   const [alert, setAlert] = useState(null);
-
+  
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
@@ -33,14 +35,16 @@ function App() {
       theme: "colored",
       });
   }
+
+  
   return (
     <>
       <AuthState>
+        <ValidateState>
         <NoteState>
           <PasswordState>
             <BrowserRouter>
               <Navbar />
-              {/* <Alert alert={alert} /> */}
               <ToastContainer />
               <div className="container my-5">
                 <Routes>
@@ -48,12 +52,15 @@ function App() {
                   <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
                   <Route exact path="/login" element={<Login showAlert={showAlert} />} />
                   <Route exact path="/notes" element={<Notes showAlert={showAlert} />} />
+                  <Route exact path="/validate" element={<Validate showAlert={showAlert} />} />
                   <Route exact path="/passwordmanager" element={<PasswordManager showAlert={showAlert} />} />
                 </Routes>
               </div>
             </BrowserRouter>
           </PasswordState>
         </NoteState>
+                  
+        </ValidateState>
       </AuthState>
     </>
   );

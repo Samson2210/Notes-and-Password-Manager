@@ -13,7 +13,7 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response  =await toast.promise(
+    const response  = await toast.promise(
       login(username,password),
       {
         pending: {

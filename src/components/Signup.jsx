@@ -4,7 +4,8 @@ import { useAuth } from '../context/auth/AuthContext';
 
 const Signup = (props) => {
   const {signup } = useAuth();
-  const [credential, setCredentials] = useState({ name: '', email: '', password: '', cpassword: '' })
+  console.log(signup, 'sign');
+  const [credential, setCredentials] = useState({ name: '', email: '', password: '', masterKey: '' })
   let navigator = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,11 +40,13 @@ const Signup = (props) => {
               </div>
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
-                <input type="password" className="form-control" name="password" id="password" onChange={onChange} minLength={5} required />
+                <input type="password" className="form-control" name="password" id="password" onChange={onChange} minLength={8} required />
               </div>
               <div className="mb-3">
-                <label htmlFor="cpassword" className="form-label">Confirm Password</label>
-                <input type="password" className="form-control" name="cpassword" id="cpassword" onChange={onChange} required minLength={(5)} />
+                <label htmlFor="masterKey" className="form-label">Master Key</label>
+                <input type="password" className="form-control" name="masterKey" id="masterKey" onChange={onChange} required minLength={(8)} />
+                <div className="form-text">Master key will be used to access your notes and passwords</div>
+
               </div>
               <button type="submit" className="btn btn-success">Signup</button>
             </form>

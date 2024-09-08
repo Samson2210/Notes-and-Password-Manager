@@ -14,11 +14,14 @@ const Notes = (props) => {
     
     useEffect(() => {
         checkTokenExpiration();
-        if(localStorage.getItem('token')){
+        if(localStorage.getItem('token') && sessionStorage.getItem('key')){
             getNotes();
         }
+        else if(!localStorage.getItem('token')){
+            navigator("/")
+        }
         else{
-            navigator("/login")
+            navigator("/validate")
         }
     }, [])
     
